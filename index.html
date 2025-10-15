@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; frame-src https://www.youtube.com;">
+  <meta name="description" content="ASE_TECH10101 - The smartest way to access technical resources. Learn programming, web development, AI tools, and more with our comprehensive learning hub.">
+  <meta name="keywords" content="programming, web development, learning platform, free courses, tutorials, technical resources, coding, AI tools">
+  <meta name="author" content="ASE_TECH10101">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="ASE_TECH10101 - Technical Resource Hub">
+  <meta property="og:description" content="Access 100,000+ technical guides and resources. Master React, Python, AI tools, and more!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://asetech10101.com">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ASE_TECH10101 - Technical Resource Hub">
+  <meta name="twitter:description" content="Access 100,000+ technical guides and resources">
+  
+  <title>ASE_TECH10101 - Technical Resource Hub | Learn Programming & Tech Skills</title>
+  <link rel="stylesheet" href="/src/style.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-animation">
+    <div class="grid-overlay"></div>
+    <canvas id="particles"></canvas>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <a href="/" style="text-decoration: none; color: inherit;">
+          <span class="logo-text">ASE_TECH<span class="logo-highlight">10101</span></span>
+        </a>
+      </div>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#about">About</a></li>
+        <li><a href="#resources">Resources</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      
+      <!-- Dark Mode Toggle will be added by JS -->
+      
+      <button class="search-btn" id="searchBtn">
+        <span>Search</span>
+      </button>
+
+      <!-- User Menu (shown when logged in) -->
+      <div class="user-menu" id="userMenu" style="display: none;">
+        <div class="user-avatar" id="userAvatar">
+          <span id="userInitials">U</span>
+        </div>
+        <div class="user-dropdown">
+          <div class="user-info">
+            <div class="user-name" id="userName">Guest</div>
+            <div class="user-email" id="userEmail">guest@example.com</div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" id="logoutBtn">
+            <span>🚪</span> Sign Out
+          </button>
+        </div>
+      </div>
+
+      <!-- Sign In Button (shown when logged out) -->
+      <button class="sign-in-btn" id="signInBtn" style="display: block;">
+        Sign In
+      </button>
+
+      <button class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Search Modal -->
+  <div class="search-modal" id="searchModal">
+    <div class="search-modal-content">
+      <button class="search-close" id="searchClose">&times;</button>
+      <h2 class="search-title">Search Resources</h2>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Type to search platforms..." class="search-input">
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <!-- Auth Modal (Login/Signup) -->
+  <div class="search-modal" id="authModal">
+    <div class="search-modal-content">
+      <button class="search-close" id="authClose">&times;</button>
+      <div id="authContent">
+        <!-- Login Form -->
+        <div id="loginForm" class="auth-form active">
+          <h2 class="search-title">Sign In to Access Resources</h2>
+          <p style="text-align: center; color: var(--text-gray); margin-bottom: 2rem;">
+            Access unlimited learning resources and track your progress
+          </p>
+          <form id="loginFormElement">
+            <div class="input-group">
+              <label for="loginEmail">Email Address</label>
+              <input type="email" id="loginEmail" placeholder="your@email.com" required>
+            </div>
+            <div class="input-group">
+              <label for="loginPassword">Password</label>
+              <input type="password" id="loginPassword" placeholder="Enter your password" required>
+            </div>
+            <div class="forgot-password">
+              <a href="#" id="showForgotPassword">Forgot password?</a>
+            </div>
+            <button type="submit" class="auth-submit-btn">Sign In</button>
+          </form>
+          <p class="auth-switch">
+            Don't have an account? <a href="#" id="showSignup">Sign up here</a>
+          </p>
+        </div>
+
+        <!-- Signup Form -->
+        <div id="signupForm" class="auth-form">
+          <h2 class="search-title">Create Your Account</h2>
+          <p style="text-align: center; color: var(--text-gray); margin-bottom: 2rem;">
+            Join thousands of developers learning new skills
+          </p>
+          <form id="signupFormElement">
+            <div class="input-group">
+              <label for="signupName">Full Name</label>
+              <input type="text" id="signupName" placeholder="John Doe" required>
+            </div>
+            <div class="input-group">
+              <label for="signupEmail">Email Address</label>
+              <input type="email" id="signupEmail" placeholder="your@email.com" required>
+            </div>
+            <div class="input-group">
+              <label for="signupPassword">Password</label>
+              <input type="password" id="signupPassword" placeholder="Minimum 6 characters" required minlength="6">
+            </div>
+            <div class="input-group">
+              <label for="signupConfirmPassword">Confirm Password</label>
+              <input type="password" id="signupConfirmPassword" placeholder="Re-enter password" required minlength="6">
+            </div>
+            <div class="email-verification-notice">
+              <span>📧</span> A verification code will be sent to your email
+            </div>
+            <button type="submit" class="auth-submit-btn">Create Account</button>
+          </form>
+          <p class="auth-switch">
+            Already have an account? <a href="#" id="showLogin">Sign in here</a>
+          </p>
+        </div>
+
+        <!-- Forgot Password Form -->
+        <div id="forgotPasswordForm" class="auth-form">
+          <h2 class="search-title">Reset Your Password</h2>
+          <p style="text-align: center; color: var(--text-gray); margin-bottom: 2rem;">
+            Enter your email to receive a password reset code
+          </p>
+          <form id="forgotPasswordFormElement">
+            <div class="input-group">
+              <label for="forgotEmail">Email Address</label>
+              <input type="email" id="forgotEmail" placeholder="your@email.com" required>
+            </div>
+            <button type="submit" class="auth-submit-btn">Send Reset Code</button>
+          </form>
+          <p class="auth-switch">
+            Remember your password? <a href="#" id="backToLogin">Sign in here</a>
+          </p>
+        </div>
+
+        <!-- Email Verification Form -->
+        <div id="verificationForm" class="auth-form">
+          <h2 class="search-title">Verify Your Email</h2>
+          <p style="text-align: center; color: var(--text-gray); margin-bottom: 2rem;">
+            Enter the 6-digit code sent to <span id="verificationEmail" style="color: var(--primary-cyan);"></span>
+          </p>
+          <form id="verificationFormElement">
+            <div class="input-group">
+              <label for="verificationCode">Verification Code</label>
+              <input type="text" id="verificationCode" placeholder="000000" required maxlength="6" pattern="\d{6}">
+            </div>
+            <button type="submit" class="auth-submit-btn">Verify Email</button>
+          </form>
+          <p class="auth-switch">
+            Didn't receive code? <a href="#" id="resendCode">Resend code</a>
+          </p>
+        </div>
+
+        <!-- Reset Password Form -->
+        <div id="resetPasswordForm" class="auth-form">
+          <h2 class="search-title">Enter Reset Code</h2>
+          <p style="text-align: center; color: var(--text-gray); margin-bottom: 2rem;">
+            Enter the code sent to your email and create a new password
+          </p>
+          <form id="resetPasswordFormElement">
+            <div class="input-group">
+              <label for="resetCode">Reset Code</label>
+              <input type="text" id="resetCode" placeholder="000000" required maxlength="6" pattern="\d{6}">
+            </div>
+            <div class="input-group">
+              <label for="newPassword">New Password</label>
+              <input type="password" id="newPassword" placeholder="Minimum 6 characters" required minlength="6">
+            </div>
+            <div class="input-group">
+              <label for="confirmNewPassword">Confirm New Password</label>
+              <input type="password" id="confirmNewPassword" placeholder="Re-enter password" required minlength="6">
+            </div>
+            <button type="submit" class="auth-submit-btn">Reset Password</button>
+          </form>
+          <p class="auth-switch">
+            <a href="#" id="backToLoginFromReset">Back to sign in</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Platform Detail Modal -->
+  <div class="platform-detail-modal" id="platformModal">
+    <div class="platform-detail-content">
+      <button class="platform-close" id="platformClose">&times;</button>
+      <div id="platformDetails"></div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container-main">
+      <div class="hero-content">
+        <div class="hero-left">
+          <h1 class="hero-title">
+            The <span class="gradient-text">Smartest Way</span> to Access
+            <br>
+            Technical Resources
+          </h1>
+          <p class="hero-subtitle">
+            With over 100,000+ technical guides and resources indexed since 2010,
+            you can confidently access the information you need
+          </p>
+          <p class="hero-desc">
+            Prepare for your projects with comprehensive how-to guides
+            that are specific to your technical needs
+          </p>
+
+          <!-- Selection Panel -->
+          <div class="selection-panel">
+            <h3 class="panel-title">Find Your Resource</h3>
+            <div class="select-grid">
+              <select class="futuristic-select" id="categorySelect">
+                <option>Select Category</option>
+                <option>Web Development</option>
+                <option>Mobile Development</option>
+                <option>DevOps</option>
+                <option>Database</option>
+                <option>Security</option>
+                <option>AI Tools</option>
+                <option>Programming Language</option>
+                <option>Backend</option>
+              </select>
+              <select class="futuristic-select" id="technologySelect">
+                <option>Select Technology</option>
+                <option>JavaScript</option>
+                <option>Python</option>
+                <option>React</option>
+                <option>Node.js</option>
+                <option>Docker</option>
+                <option>MongoDB</option>
+              </select>
+              <select class="futuristic-select" id="levelSelect">
+                <option>Select Level</option>
+                <option>Beginner</option>
+                <option>Intermediate</option>
+                <option>Advanced</option>
+                <option>Expert</option>
+              </select>
+              <button class="access-btn" id="accessBtn">
+                <span>Access Resources</span>
+                <div class="btn-glow"></div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="hero-right">
+          <div class="stat-card">
+            <div class="stat-icon">📚</div>
+            <div class="stat-number">100K+</div>
+            <div class="stat-label">Technical Guides</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🚀</div>
+            <div class="stat-number">50K+</div>
+            <div class="stat-label">Active Users</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Availability</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="browse-section" id="about" style="background: linear-gradient(180deg, transparent 0%, rgba(255, 31, 90, 0.02) 50%, transparent 100%);">
+    <div class="container-main">
+      <h2 class="section-title">
+        About <span class="gradient-text">ASE_TECH10101</span>
+      </h2>
+      <p class="section-subtitle">
+        Your comprehensive technical resource hub since 2010
+      </p>
+
+      <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+        <div style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; padding: 3rem; margin-bottom: 3rem;">
+          <p style="font-size: 1.2rem; color: var(--text-gray); line-height: 1.8; margin-bottom: 1.5rem;">
+            ASE_TECH10101 is a cutting-edge platform that provides developers, engineers, and tech enthusiasts
+            with organized access to over <span style="color: var(--primary-cyan); font-weight: 700;">100,000+ technical resources</span>.
+          </p>
+          <p style="font-size: 1.1rem; color: var(--text-muted); line-height: 1.8;">
+            We've curated learning paths across multiple platforms, from web development frameworks like React and Vue.js
+            to AI tools like Claude AI and TensorFlow. Each resource is categorized by difficulty level and includes
+            estimated completion times to help you plan your learning journey.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem;">
+          <div style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 15px; padding: 2rem;">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎯</div>
+            <h3 style="font-family: 'Orbitron', sans-serif; color: var(--primary-cyan); margin-bottom: 0.5rem;">Mission</h3>
+            <p style="color: var(--text-gray); font-size: 0.95rem;">
+              Democratize access to quality technical education
+            </p>
+          </div>
+
+          <div style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 15px; padding: 2rem;">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💡</div>
+            <h3 style="font-family: 'Orbitron', sans-serif; color: var(--primary-cyan); margin-bottom: 0.5rem;">Vision</h3>
+            <p style="color: var(--text-gray); font-size: 0.95rem;">
+              Empower every developer with structured learning paths
+            </p>
+          </div>
+
+          <div style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 15px; padding: 2rem;">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚡</div>
+            <h3 style="font-family: 'Orbitron', sans-serif; color: var(--primary-cyan); margin-bottom: 0.5rem;">Values</h3>
+            <p style="color: var(--text-gray); font-size: 0.95rem;">
+              Quality, accessibility, and continuous improvement
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Browse Section -->
+  <section class="browse-section" id="resources">
+    <div class="container-main">
+      <h2 class="section-title">
+        <span class="gradient-text">Browse</span> Technical Resources by Platform
+      </h2>
+      <p class="section-subtitle">
+        Tap a platform that matches your needs and explore comprehensive guides
+      </p>
+
+      <!-- Platform Grid -->
+      <div class="platform-grid" id="platformGrid">
+        <!-- Platforms will be dynamically loaded -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Tutorials Section will be inserted here by JS -->
+
+  <!-- Tools Section -->
+  <section class="browse-section" id="tools">
+    <div class="container-main">
+      <h2 class="section-title">
+        Developer <span class="gradient-text">Tools</span> & Resources
+      </h2>
+      <p class="section-subtitle">
+        Essential tools to boost your productivity and streamline your workflow
+      </p>
+
+      <div class="platform-grid">
+        <!-- Tools will be dynamically loaded -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <div class="container-main">
+      <h2 class="section-title">
+        What Our <span class="gradient-text">Users</span> Say
+      </h2>
+
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div class="quote-mark">"</div>
+          <p class="testimonial-text">
+            The comprehensive guides helped me complete my project in record time.
+            ASE_TECH10101 is an invaluable resource!
+          </p>
+          <div class="testimonial-author">— Alex Chen</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="quote-mark">"</div>
+          <p class="testimonial-text">
+            Best technical resource index I've ever used. The organization and
+            search functionality are top-notch!
+          </p>
+          <div class="testimonial-author">— Sarah Martinez</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="quote-mark">"</div>
+          <p class="testimonial-text">
+            Saved me countless hours of searching. Everything I need is right here,
+            perfectly organized and easy to access.
+          </p>
+          <div class="testimonial-author">— James Wilson</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="quote-mark">"</div>
+          <p class="testimonial-text">
+            As a full-stack developer, having all these resources in one place is a game-changer.
+            The learning paths are incredibly helpful!
+          </p>
+          <div class="testimonial-author">— Kim Park</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section will be inserted here by JS -->
+
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+    <div class="container-main">
+      <!-- Newsletter will be inserted here by JS -->
+      
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="logo-text">ASE_TECH<span class="logo-highlight">10101</span></div>
+          <p class="footer-tagline">Advanced Technical Resource Index</p>
+        </div>
+        <div class="footer-links">
+          <a href="#terms">Terms of Service</a>
+          <a href="#privacy">Privacy Policy</a>
+        </div>
+      </div>
+      
+      <!-- Social Links will be inserted here by JS -->
+      
+      <div class="footer-bottom">
+        <p>© 2025 ASE_TECH10101. All Rights Reserved. Technical Excellence in Every Index.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Terms of Service Modal -->
+  <div class="search-modal" id="termsModal">
+    <div class="search-modal-content">
+      <button class="search-close" id="termsClose">&times;</button>
+      <h2 class="search-title">Terms of Service</h2>
+      <div style="padding: 1rem; color: var(--text-gray); line-height: 1.8;">
+        <p style="margin-bottom: 1rem;">Last updated: January 2025</p>
+
+        <h3 style="color: var(--primary-cyan); margin: 1.5rem 0 1rem;">1. Acceptance of Terms</h3>
+        <p>By accessing ASE_TECH10101, you agree to be bound by these Terms of Service and all applicable laws and regulations.</p>
+
+        <h3 style="color: var(--primary-cyan); margin: 1.5rem 0 1rem;">2. Use License</h3>
+        <p>Permission is granted to temporarily access the materials on ASE_TECH10101 for personal, non-commercial use only. This is the grant of a license, not a transfer of title.</p>
+
+        <h3 style="color: var(--primary-cyan); margin: 1.5rem 0 1rem;">3. Educational Purpose</h3>
+        <p>All resources provided are for educational purposes. We do not guarantee the accuracy or completeness of any information on this platform.</p>
+
+        <h3 style="color: var(--primary-cyan); margin: 1.5rem 0 1rem;">4. User Content</h3>
+        <p>Your learning progress is stored locally in your browser. We do not collect or store personal data on our servers.</p>
+
+        <h3 style="color: var(--primary-cyan); margin: 1.5rem 0 1rem;">5. Modifications</h3>
+        <p>ASE_TECH10101 reserves the right to modify these terms at any time. Continued use of the platform constitutes acceptance of modified terms.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Privacy Policy Modal -->
+  <div class="search-modal" id="privacyModal">
+    <div class="search-modal-content">
+      <button class="search-close" id="privacyClose">&times;</button>
+      <h2 class="search-title">Privacy Policy</h2>
+      <div style="padding: 1rem; color: var(--text-gray); line-height: 1.8;">
+        <p style="margin-bottom: 1rem;">Last updated: January 2025</p>
+
+        <h3 style="color: var(--primary-cyan); margin: 1.5rem 0 1rem;">1. Information We Collect</h3>
+        <p>ASE_TECH10101 uses localStorage to save your learning progress locally on your device. We do not collect, transmit, or store any personal information on our servers.</p>
+
+        <h3 style="color: var(--primary-cyan); margin: 1.5rem 0 1rem;">2. Local Storage</h3>
+        <p>Your progress data (completed resources) is stored in your browser's localStorage. This data never leaves your device and can be cleared at any time through your browser settings.</p>
+
+        <h3 style="color: var(--primary-cyan); margin: 1.5rem 0 1rem;">3. Analytics</h3>
+        <p>We do not use analytics, tracking cookies, or any third-party services that collect user data.</p>
+
+        <h3 style="color: var(--primary-cyan); margin: 1.5rem 0 1rem;">4. Third-Party Links</h3>
+        <p>Our platform may contain links to external websites. We are not responsible for the privacy practices of these third-party sites.</p>
+
+        <h3 style="color: var(--primary-cyan); margin: 1.5rem 0 1rem;">5. Data Security</h3>
+        <p>Since all data is stored locally on your device, you maintain full control over your information. We recommend using secure devices and browsers.</p>
+
+        <h3 style="color: var(--primary-cyan); margin: 1.5rem 0 1rem;">6. Contact</h3>
+        <p>For privacy concerns or questions, please contact us through our social media channels.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keyboard Shortcut Hint -->
+  <div class="keyboard-hint" id="keyboardHint">
+    Press <kbd>/</kbd> to search • <kbd>ESC</kbd> to close
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
